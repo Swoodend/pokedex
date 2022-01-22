@@ -2,6 +2,7 @@ import * as React from 'react';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import useSearchNavigation from '../../hooks/useSearchNavigation';
 import { Link } from 'react-router-dom';
+import PokemonCard from '../../components/PokemonCard/PokemonCard';
 
 interface ShowcaseProps {
     searchParam?: string;
@@ -12,12 +13,18 @@ interface Move {
     url: string;
 };
 
-interface Pokemon {
+export interface Type {
+    name: string;
+    url: string;
+};
+
+export interface Pokemon {
     img: string;
     height: number;
     weight: number;
     moves: Move[];
     name: string;
+    types: Type[]
 };
 
 // todo - handle missing values (SW)
@@ -27,15 +34,17 @@ const formatPokemon = (pokemon: Record<string, any>): Pokemon => {
         height,
         weight,
         moves,
-        name
+        name,
+        types,
     } = pokemon;
 
     return {
-        img: other['official-artwork']['front-default'],
+        img: other['official-artwork']['front_default'],
         height,
         weight,
         moves,
-        name
+        name,
+        types
     };
 };
 
@@ -47,6 +56,7 @@ const POKEMON_API_ENDPOINT = 'https://pokeapi.co/api/v2/pokemon';
 
 const Showcase = ({ searchParam }: ShowcaseProps) => {
     const [featuredPokemon, setFeaturedPokemon] = React.useState<Pokemon | null | undefined>();
+    const [loading, setLoading] = React.useState(true);
 
     const { search, setSearch, onSearch } = useSearchNavigation('./', searchParam);
 
@@ -57,6 +67,7 @@ const Showcase = ({ searchParam }: ShowcaseProps) => {
         const signal = controller.signal;
 
         const fetchPokemon = async () => {
+            setLoading(true);
             try {
                 const response = await fetch(`${POKEMON_API_ENDPOINT}/${searchParam}`, { signal });
 
@@ -68,13 +79,15 @@ const Showcase = ({ searchParam }: ShowcaseProps) => {
 
                 if (response.status === 404) {
                     // todo - handle this gracefully in the UI (SW)
-                    alert('we could not find this pokemon');
+                    setFeaturedPokemon(null);
                 }
 
             } catch (error: any) {
                 if (error.name !== 'AbortError') {
                     console.error('Encountered unexpected error whhile fetching pokemon. Please contact your administrator.');
                 }
+            } finally {
+                setLoading(false);
             }
         }
 
@@ -90,7 +103,7 @@ const Showcase = ({ searchParam }: ShowcaseProps) => {
 
     return (
         <div className="min-h-screen flex flex-col">
-            <div className="h-26 xs:h-20 xs:flex xs:items-center">
+            <div className="h-26 xs:h-20 xs:flex xs:items-center border-b">
                 <Link to="/">
                     <div className="h-full xs:w-32 flex items-center bg-blue-600 xs:bg-gray-50">
                         <img
@@ -104,7 +117,24 @@ const Showcase = ({ searchParam }: ShowcaseProps) => {
                     <SearchBar onSearch={onSearch} onChange={onChange} value={search} />
                 </div>
             </div>
-            <div className="flex items-center justify-center flex-1 bg-teal-300">{featuredPokemon?.name}</div>
+            <div className="flex items-center justify-center flex-1">
+                { loading ? <p>spinner</p> : null }
+
+                {featuredPokemon ?
+                    <PokemonCard 
+                        name={featuredPokemon.name}
+                        img={featuredPokemon.img}
+                        height={featuredPokemon.height}
+                        weight={featuredPokemon.weight}
+                        moves={featuredPokemon.moves}
+                        types={featuredPokemon.types}
+                    />
+                    : null
+                }
+
+                {/* null represents a special case where we could not find the pokemon that the user searched for*/}
+                { featuredPokemon === null ? <p>show "not found" card</p> : null }
+            </div>
         </div>
     );
 };

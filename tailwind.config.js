@@ -13,6 +13,11 @@ module.exports = {
     extend: {
       rotate: {
         '24': '24deg'
+      },
+      height: {
+        '128': '32rem',
+        '132': '33rem',
+        '180': '45rem'
       }
     },
   },
