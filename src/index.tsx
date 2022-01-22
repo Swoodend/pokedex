@@ -6,9 +6,9 @@ import App from './App';
 
 ReactDOM.render(
   <BrowserRouter>
-    <div className="bg-gray-50 min-h-screen">
+    <main className="bg-gray-50 min-h-screen">
       <App />
-    </div>
+    </main>
   </BrowserRouter>,
   document.getElementById('root')
 );
