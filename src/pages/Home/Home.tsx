@@ -17,16 +17,20 @@ const Home = () => {
     return (
         <div className="md:max-w-xl lg:max-w-2xl xl:max-w-5xl 2xl:max-w-2/3 mx-auto flex flex-col justify-center items-center min-h-screen">
             <div className="h-48 w-full md:w-10/12 lg:w-2/3 flex items-center justify-center relative">
-                <img 
-                    src="/pokedex_logo.png" 
-                    alt="Pokedex logo with a pokeball mid flight" 
-                    className="absolute -top-24 xxs:-top-32 md:-top-40 transform -rotate-3" 
+                <img
+                    src="/pokedex_logo.png"
+                    alt="Pokedex logo with a pokeball mid flight"
+                    className="absolute -top-24 xxs:-top-32 md:-top-40 transform -rotate-3"
                 />
-                <SearchBar
-                    onSearch={onSearch}
-                    onChange={value => setSearchValue(value)}
-                    value={searchValue}
-                />
+                <div className="w-full flex justify-center">
+                    <div className="h-full w-full flex px-2 xl:justify-center xl:w-2/3 relative">
+                        <SearchBar
+                            onSearch={onSearch}
+                            onChange={value => setSearchValue(value)}
+                            value={searchValue}
+                        />
+                    </div>
+                </div>
             </div>
         </div>
     );
