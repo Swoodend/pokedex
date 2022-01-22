@@ -1,6 +1,7 @@
 import * as React from 'react';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import useSearchNavigation from '../../hooks/useSearchNavigation';
+import { Link } from 'react-router-dom';
 
 interface ShowcaseProps {
     searchParam?: string;
@@ -88,19 +89,23 @@ const Showcase = ({ searchParam }: ShowcaseProps) => {
     };
 
     return (
-        <div className="h-26 xs:h-20 xs:flex xs:items-center bg-red-300">
-            <div className="h-full xs:w-32 flex items-center bg-blue-600">
-                <img
-                    src="/pokedex_logo.png"
-                    alt="Pokedex logo with a pokeball mid flight"
-                    className="relative -top-1"
-                />
+        <>
+            <div className="h-26 xs:h-20 xs:flex xs:items-center">
+                <Link to="/">
+                    <div className="h-full xs:w-32 flex items-center bg-blue-600 xs:bg-gray-50">
+                        <img
+                            src="/pokedex_logo.png"
+                            alt="Pokedex logo with a pokeball mid flight"
+                            className="relative -top-1"
+                        />
+                    </div>
+                </Link>
+                <div className="flex-1 px-4 py-2 md:max-w-sm lg:max-w-md" >
+                    <SearchBar onSearch={onSearch} onChange={onChange} value={search} />
+                </div>
             </div>
-            <div className="flex-1 px-4 py-2 md:max-w-sm lg:max-w-md" >
-                <SearchBar onSearch={onSearch} onChange={onChange} value={search} />
-            </div>
-            <h1>{featuredPokemon?.name}</h1>
-        </div>
+            <div>{featuredPokemon?.name}</div>
+        </>
     );
 };
 
