@@ -89,7 +89,7 @@ const Showcase = ({ searchParam }: ShowcaseProps) => {
     };
 
     return (
-        <>
+        <div className="min-h-screen flex flex-col">
             <div className="h-26 xs:h-20 xs:flex xs:items-center">
                 <Link to="/">
                     <div className="h-full xs:w-32 flex items-center bg-blue-600 xs:bg-gray-50">
@@ -104,8 +104,8 @@ const Showcase = ({ searchParam }: ShowcaseProps) => {
                     <SearchBar onSearch={onSearch} onChange={onChange} value={search} />
                 </div>
             </div>
-            <div>{featuredPokemon?.name}</div>
-        </>
+            <div className="flex items-center justify-center flex-1 bg-teal-300">{featuredPokemon?.name}</div>
+        </div>
     );
 };
 
