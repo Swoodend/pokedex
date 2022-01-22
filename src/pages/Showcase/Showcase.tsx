@@ -1,15 +1,15 @@
 import * as React from 'react';
 import SearchBar from '../../components/SearchBar/SearchBar';
-import { useNavigate } from 'react-router-dom';
+import useSearchNavigation from '../../hooks/useSearchNavigation';
 
 interface ShowcaseProps {
-    search: string | null;
+    searchParam?: string;
 };
 
 interface Move {
     name: string;
     url: string;
-}
+};
 
 interface Pokemon {
     img: string;
@@ -17,7 +17,7 @@ interface Pokemon {
     weight: number;
     moves: Move[];
     name: string;
-}
+};
 
 // todo - handle missing values (SW)
 const formatPokemon = (pokemon: Record<string, any>): Pokemon => {
@@ -44,21 +44,20 @@ const formatPokemon = (pokemon: Record<string, any>): Pokemon => {
  */
 const POKEMON_API_ENDPOINT = 'https://pokeapi.co/api/v2/pokemon';
 
-const Showcase = ({ search }: ShowcaseProps) => {
+const Showcase = ({ searchParam }: ShowcaseProps) => {
     const [featuredPokemon, setFeaturedPokemon] = React.useState<Pokemon | null | undefined>();
-    const [searchValue, setSearchValue] = React.useState(search ? search : undefined);
-    
-    const navigate = useNavigate();
+
+    const { search, setSearch, onSearch } = useSearchNavigation('./', searchParam);
 
     React.useEffect(() => {
-        if (!search) return;
+        if (!searchParam) return;
 
         const controller = new AbortController();
         const signal = controller.signal;
 
         const fetchPokemon = async () => {
             try {
-                const response = await fetch(`${POKEMON_API_ENDPOINT}/${search}`, { signal });
+                const response = await fetch(`${POKEMON_API_ENDPOINT}/${searchParam}`, { signal });
 
                 if (response.status === 200) {
                     const pokemon = await response.json();
@@ -82,32 +81,27 @@ const Showcase = ({ search }: ShowcaseProps) => {
 
         return () => controller.abort();
 
-    }, [search]);
+    }, [searchParam]);
 
     const onChange = (value: string) => {
-        setSearchValue(value);
-    };
-
-    const onSearch = (event: React.FormEvent, searchValue: string) => {
-        event.preventDefault();
-        navigate(`./?search=${searchValue.toLowerCase()}`);
+        setSearch(value);
     };
 
     return (
         <div className="h-26 xs:h-20 xs:flex xs:items-center bg-red-300">
             <div className="h-full xs:w-32 flex items-center bg-blue-600">
-                <img 
+                <img
                     src="/pokedex_logo.png"
                     alt="Pokedex logo with a pokeball mid flight"
                     className="relative -top-1"
                 />
             </div>
             <div className="flex-1 px-4 py-2 md:max-w-sm lg:max-w-md" >
-                <SearchBar onSearch={onSearch} onChange={onChange}  value={searchValue}/>
+                <SearchBar onSearch={onSearch} onChange={onChange} value={search} />
             </div>
             <h1>{featuredPokemon?.name}</h1>
         </div>
-    )
-}
+    );
+};
 
 export default Showcase;

@@ -19,12 +19,12 @@ const SearchBar = (props: SearchBarProps) => {
     const onFormSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         onSearch(event, value);
-    }
+    };
 
     const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { target: { value } } = event;
         onChange(value);
-    }
+    };
 
     return (
         <form className="w-full relative" onSubmit={onFormSubmit} role="search">
@@ -45,6 +45,6 @@ const SearchBar = (props: SearchBarProps) => {
             </button>
         </form>
     );
-}
+};
 
 export default SearchBar;
