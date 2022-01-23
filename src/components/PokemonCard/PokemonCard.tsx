@@ -35,7 +35,7 @@ const PokemonCard = (props: PokemonCardProps) => {
                     </div>
                     <img src={img} alt={`The pokemon ${name}`} className="h-full object-cover" />
                 </div>
-                <div className={`flex flex-col flex-1 p-4 ${backgroundColor} ${fontColor} relative overflow-y-auto`}>
+                <div className={`flex flex-col flex-1 p-4 ${backgroundColor} ${fontColor} relative overflow-y-auto rounded-b-2xl`}>
                     {
                         showMoves ?
                         <div>
