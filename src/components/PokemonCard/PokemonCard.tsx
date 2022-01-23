@@ -3,6 +3,7 @@ import { Pokemon } from '../../pages/Showcase/Showcase';
 import { HeartIcon, ScaleIcon, ArrowUpIcon } from '@heroicons/react/solid';
 import TypesDisplayRow from './TypesDisplayRow'
 import StatRow from './StatRow'
+import { TYPE_COLOR_MAPPING } from './TypeColorMapping';
 
 interface PokemonCardProps extends Pokemon { };
 
@@ -19,6 +20,11 @@ const PokemonCard = (props: PokemonCardProps) => {
     } = props;
 
     const [showMoves, setShowMoves] = React.useState(false);
+    
+    const primaryType = types[0].name.toLowerCase();
+
+    const backgroundColor = TYPE_COLOR_MAPPING[primaryType];
+    const fontColor = TYPE_COLOR_MAPPING[`${primaryType}-text`];
 
     return (
         <div className="bg-white border-2 rounded-2xl shadow-lg h-132 xs:h-180 w-full xs:max-w-md sm: max-w-lg">
@@ -29,7 +35,7 @@ const PokemonCard = (props: PokemonCardProps) => {
                     </div>
                     <img src={img} alt={`The pokemon ${name}`} className="h-full object-cover" />
                 </div>
-                <div className="flex flex-col flex-1 p-4 bg-blue-600 rounded-b-2xl text-white relative overflow-y-auto">
+                <div className={`flex flex-col flex-1 p-4 ${backgroundColor} ${fontColor} relative overflow-y-auto`}>
                     {
                         showMoves ?
                         <div>
@@ -54,8 +60,8 @@ const PokemonCard = (props: PokemonCardProps) => {
                             role="button"
                             aria-pressed={showMoves}
                             onClick={() => setShowMoves(!showMoves)}
-                            className="border-2 border-blue-500 px-2 py-1 rounded text-sm bg-blue-500
-                             focus:outline-none focus:ring-1 focus:ring-blue-200 transition translate active:scale-95"
+                            className={`border-2 px-2 py-1 rounded text-sm ${backgroundColor} ${fontColor} border-${fontColor.split('-')[1]}
+                             focus:outline-none focus:ring-1 focus:ring-blue-200 transition translate active:scale-95`}
                         >
                             View {showMoves ? 'stats' : 'moves'}
                         </button>

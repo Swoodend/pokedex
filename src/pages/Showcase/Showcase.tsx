@@ -12,16 +12,17 @@ interface ShowcaseProps {
 
 
 interface MoveResponse {
-    move: {
-        name: string;
-        url: string;
-    }
+    move: Move
 };
 
 interface Move {
     name: string;
     url: string;
 };
+
+interface TypeReponse {
+    type: Type,
+}
 
 export interface Type {
     name: string;
@@ -77,6 +78,10 @@ const formatMoves = (moves: MoveResponse[]) => {
     return moves.map(move => ({...move.move}))
 }
 
+const formatTypes = (types: TypeReponse[]) => {
+    return types.map(type => ({...type.type}))
+}
+
 // todo - handle missing values (SW)
 const formatPokemon = (pokemon: Record<string, any>): Pokemon => {
     const {
@@ -94,7 +99,7 @@ const formatPokemon = (pokemon: Record<string, any>): Pokemon => {
         height,
         weight,
         name,
-        types,
+        types: formatTypes(types),
         moves: formatMoves(moves),
         stats: formatStats(stats)
     };
