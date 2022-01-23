@@ -3,9 +3,19 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import useSearchNavigation from '../../hooks/useSearchNavigation';
 import { Link } from 'react-router-dom';
 import PokemonCard from '../../components/PokemonCard/PokemonCard';
+import { PlusCircleIcon, SwitchHorizontalIcon, ShieldExclamationIcon, HandIcon } from '@heroicons/react/outline';
+import { JsxElement } from 'typescript';
 
 interface ShowcaseProps {
     searchParam?: string;
+};
+
+
+interface MoveResponse {
+    move: {
+        name: string;
+        url: string;
+    }
 };
 
 interface Move {
@@ -18,14 +28,54 @@ export interface Type {
     url: string;
 };
 
+interface StatResponse {
+    base_stat: number;
+    effort: number;
+    stat: {
+        name: string;
+        url: string;
+    }
+}
+
+interface Stat {
+    name: string;
+    value: number;
+    icon: React.FunctionComponent<React.ComponentProps<'svg'>>;
+}
+
 export interface Pokemon {
     img: string;
     height: number;
     weight: number;
     moves: Move[];
     name: string;
-    types: Type[]
+    types: Type[];
+    stats: Stat[];
 };
+
+const POKEMON_STATS: Record<string, boolean> = { hp: true, defense: true, speed: true, attack: true };
+
+const STAT_ICON_MAP: Record<string, React.FunctionComponent> = {
+    hp: PlusCircleIcon,
+    defense: ShieldExclamationIcon,
+    speed: SwitchHorizontalIcon,
+    attack: HandIcon
+}
+
+const formatStats = (stats: StatResponse[]): Stat[] => {
+    // stats.map((statObj: StatResponse) => ({ name: statObj.stat.name, value: statObj.base_stat, icon: STAT_ICON_MAP[statObj.stat.name]} as Stat))
+    return stats
+        .filter(statObj => POKEMON_STATS[statObj.stat.name])
+        .map(statObj => ({ 
+            name: statObj.stat.name,
+            value: statObj.base_stat,
+            icon: STAT_ICON_MAP[statObj.stat.name]
+        } as Stat));
+}
+
+const formatMoves = (moves: MoveResponse[]) => {
+    return moves.map(move => ({...move.move}))
+}
 
 // todo - handle missing values (SW)
 const formatPokemon = (pokemon: Record<string, any>): Pokemon => {
@@ -36,15 +86,17 @@ const formatPokemon = (pokemon: Record<string, any>): Pokemon => {
         moves,
         name,
         types,
+        stats
     } = pokemon;
 
     return {
         img: other['official-artwork']['front_default'],
         height,
         weight,
-        moves,
         name,
-        types
+        types,
+        moves: formatMoves(moves),
+        stats: formatStats(stats)
     };
 };
 
@@ -118,22 +170,23 @@ const Showcase = ({ searchParam }: ShowcaseProps) => {
                 </div>
             </div>
             <div className="flex items-center justify-center flex-1">
-                { loading ? <p>spinner</p> : null }
+                {loading ? <p>spinner</p> : null}
 
                 {featuredPokemon ?
-                    <PokemonCard 
+                    <PokemonCard
                         name={featuredPokemon.name}
                         img={featuredPokemon.img}
                         height={featuredPokemon.height}
                         weight={featuredPokemon.weight}
                         moves={featuredPokemon.moves}
                         types={featuredPokemon.types}
+                        stats={featuredPokemon.stats}
                     />
                     : null
                 }
 
                 {/* null represents a special case where we could not find the pokemon that the user searched for*/}
-                { featuredPokemon === null ? <p>show "not found" card</p> : null }
+                {featuredPokemon === null ? <p>show "not found" card</p> : null}
             </div>
         </div>
     );
