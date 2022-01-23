@@ -13,7 +13,7 @@ const StatRow = ({ Icon, name, value }: StatRowProps) => {
                 <Icon className="h-6 w-6 inline-block" />
             </span>
             <span className="flex justify-center items-center">{name}</span>
-            <span className="flex justify-center items-center text-3xl font-thin">{value}</span>
+            <span className="flex justify-center items-center text-xl font-thin">{value}</span>
         </div>
     );
 }

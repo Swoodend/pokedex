@@ -34,23 +34,30 @@ const PokemonCard = (props: PokemonCardProps) => {
     return (
         <div className="bg-white border-2 rounded-2xl shadow-lg h-132 xs:h-180 w-full xs:max-w-md sm: max-w-lg">
             <div className="flex flex-col h-full">
-                <div className="h-2/5 w-ful flex justify-center p-2 relative">
+                <div className="h-1/2 w-ful flex justify-center p-2 relative">
                     <div className="absolute top-2 right-2 p-0.5 rounded-md cursor-pointer" title="Add to favourites">
-                        <HeartIcon className="h-8 w-8 text-white" />
+                        <button 
+                            title="Add to favourites"
+                            className="focus:outline-none focus:ring-1 ring-red-500 rounded-md ring-offset-2 transition-transform transform active:scale-95"
+                        >
+                            <HeartIcon className="h-8 w-8 text-white bg-red-500 rounded-md" />
+                        </button>
                     </div>
-                    <img src={img} alt={`The pokemon ${name}`} className="h-full object-cover" />
+                    <img src={img} alt={`The pokemon ${name}`} className="h-full object-cover select-none" />
                 </div>
                 <div className={`flex flex-col flex-1 p-4 ${backgroundColor} ${fontColor} relative overflow-y-auto rounded-b-2xl`}>
                     {
                         showMoves ?
-                            moves.map(move => <div key={move.name}>{move.name}</div>)
+                            <div className="grid grid-cols-2">
+                                {moves.map(move => <div key={move.name}>{move.name}</div>)}
+                            </div>
                         :
                         <>
                             <div className="absolute top-3 right-3">
                                 <TypesDisplayRow types={types} fontColor={fontColor}/>
                             </div>
-                            <h1 className="text-7xl font-thin">{`${name[0].toUpperCase()}${name.substring(1)}`}</h1>
-                            <div className="grid grid-cols-2 grid-rows-2 gap-2 pt-6">
+                            <h1 className="text-7xl font-thin select-none">{`${name[0].toUpperCase()}${name.substring(1)}`}</h1>
+                            <div className="grid grid-cols-2 grid-rows-2 gap-2 pt-6 xs:pt-12 xs:gap-y-4">
                                 {stats.map(stat => <StatRow key={stat.name} Icon={stat.icon} name={stat.name} value={stat.value} />)}
                                 <StatRow Icon={ArrowUpIcon} name="height" value={height} />
                                 <StatRow Icon={ScaleIcon} name="weight" value={weight} />

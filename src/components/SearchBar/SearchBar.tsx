@@ -39,7 +39,7 @@ const SearchBar = (props: SearchBarProps) => {
             />
             <button
                 type="submit"
-                className="h-8 w-8 absolute top-2 right-4 rounded-full ring-offset-2 focus:outline-none focus:ring-1 focus:ring-blue-600 transform transition active:scale-95"
+                className="h-8 w-8 absolute top-2 right-4 rounded-full ring-offset-2 focus:outline-none focus:ring-1 focus:ring-blue-600 transition-transform transform active:scale-95"
             >
                 <SearchIcon className="h-8 w-8 rounded-l-none text-gray-600 rounded-full" />
             </button>
