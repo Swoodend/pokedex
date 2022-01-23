@@ -4,7 +4,6 @@ import useSearchNavigation from '../../hooks/useSearchNavigation';
 import { Link } from 'react-router-dom';
 import PokemonCard from '../../components/PokemonCard/PokemonCard';
 import { PlusCircleIcon, SwitchHorizontalIcon, ShieldExclamationIcon, HandIcon } from '@heroicons/react/outline';
-import { JsxElement } from 'typescript';
 
 interface ShowcaseProps {
     searchParam?: string;
@@ -64,7 +63,6 @@ const STAT_ICON_MAP: Record<string, React.FunctionComponent> = {
 }
 
 const formatStats = (stats: StatResponse[]): Stat[] => {
-    // stats.map((statObj: StatResponse) => ({ name: statObj.stat.name, value: statObj.base_stat, icon: STAT_ICON_MAP[statObj.stat.name]} as Stat))
     return stats
         .filter(statObj => POKEMON_STATS[statObj.stat.name])
         .map(statObj => ({ 
