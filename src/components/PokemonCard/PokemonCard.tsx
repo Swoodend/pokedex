@@ -44,7 +44,6 @@ const PokemonCard = (props: PokemonCardProps) => {
                         showMoves ?
                             <>
                                 <h1 className="text-4xl mb-2 font-md select-none">Moves</h1>
-
                                 <div className="grid grid-cols-2">
                                         {moves.map(move => <div key={move.name}>{move.name}</div>)}
                                 </div>

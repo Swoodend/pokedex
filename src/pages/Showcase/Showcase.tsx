@@ -72,13 +72,8 @@ const formatStats = (stats: StatResponse[]): Stat[] => {
         } as Stat));
 }
 
-const formatMoves = (moves: MoveResponse[]) => {
-    return moves.map(move => ({...move.move}))
-}
-
-const formatTypes = (types: TypeReponse[]) => {
-    return types.map(type => ({...type.type}))
-}
+const formatMoves = (moves: MoveResponse[]) => moves.map(move => ({...move.move}));
+const formatTypes = (types: TypeReponse[]) => types.map(type => ({...type.type}));
 
 // todo - handle missing values (SW)
 const formatPokemon = (pokemon: Record<string, any>): Pokemon => {
@@ -128,7 +123,6 @@ const Showcase = ({ searchParam }: ShowcaseProps) => {
 
                 if (response.status === 200) {
                     const pokemon = await response.json();
-                    // todo - draw something interesting with this data (SW)
                     setFeaturedPokemon(formatPokemon(pokemon) as Pokemon)
                 }
 
@@ -142,6 +136,7 @@ const Showcase = ({ searchParam }: ShowcaseProps) => {
                     console.error('Encountered unexpected error whhile fetching pokemon. Please contact your administrator.');
                 }
             } finally {
+                // todo - create a loading component (SW)
                 setLoading(false);
             }
         }
