@@ -7,7 +7,6 @@ import { TYPE_COLOR_MAPPING } from './TypeColorMapping';
 
 interface PokemonCardProps extends Pokemon { };
 
-// todo - this will become the main display component when we successfully fetch pokemon data (SW)
 const PokemonCard = (props: PokemonCardProps) => {
     const {
         name,
@@ -26,11 +25,6 @@ const PokemonCard = (props: PokemonCardProps) => {
     const backgroundColor = TYPE_COLOR_MAPPING[primaryType];
     const fontColor = TYPE_COLOR_MAPPING[`${primaryType}-text`];
     
-    const getBorderColor = () => {
-        const fontClassSegments = fontColor.split('-');
-        return fontClassSegments.length === 3 ? `border-${fontClassSegments[1]}-${fontClassSegments[2]}` : `border-${fontClassSegments[1]}`;
-    }
-
     return (
         <div className="bg-white border-2 rounded-2xl shadow-lg h-132 xs:h-180 w-full xs:max-w-md sm: max-w-lg">
             <div className="flex flex-col h-full">
@@ -48,9 +42,13 @@ const PokemonCard = (props: PokemonCardProps) => {
                 <div className={`flex flex-col flex-1 p-4 ${backgroundColor} ${fontColor} relative overflow-y-auto rounded-b-2xl`}>
                     {
                         showMoves ?
-                            <div className="grid grid-cols-2">
-                                {moves.map(move => <div key={move.name}>{move.name}</div>)}
-                            </div>
+                            <>
+                                <h1 className="text-4xl mb-2 font-md select-none">Moves</h1>
+
+                                <div className="grid grid-cols-2">
+                                        {moves.map(move => <div key={move.name}>{move.name}</div>)}
+                                </div>
+                            </>
                         :
                         <>
                             <div className="absolute top-3 right-3">
