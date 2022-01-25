@@ -1,2 +1,5 @@
 ## To run
-In the project directory, you can run `yarn build` or `npm build`. The app should spin up at `http://localhost:3000` for you to visit!
+
+- run `yarn`
+- `yarn start` to spin up a dev instance
+- `yarn build` to spin up a production bundle
