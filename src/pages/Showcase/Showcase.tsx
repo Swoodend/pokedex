@@ -4,11 +4,11 @@ import useSearchNavigation from '../../hooks/useSearchNavigation';
 import { Link } from 'react-router-dom';
 import PokemonCard from '../../components/PokemonCard/PokemonCard';
 import { PlusCircleIcon, SwitchHorizontalIcon, ShieldExclamationIcon, HandIcon } from '@heroicons/react/outline';
+import UserMenu from '../../components/UserMenu/UserMenu';
 
 interface ShowcaseProps {
     searchParam?: string;
 };
-
 
 interface MoveResponse {
     move: Move
@@ -60,7 +60,7 @@ const STAT_ICON_MAP: Record<string, React.FunctionComponent> = {
     defense: ShieldExclamationIcon,
     speed: SwitchHorizontalIcon,
     attack: HandIcon
-}
+};
 
 const formatStats = (stats: StatResponse[]): Stat[] => {
     return stats
@@ -70,7 +70,7 @@ const formatStats = (stats: StatResponse[]): Stat[] => {
             value: statObj.base_stat,
             icon: STAT_ICON_MAP[statObj.stat.name]
         } as Stat));
-}
+};
 
 const formatMoves = (moves: MoveResponse[]) => moves.map(move => ({...move.move}));
 const formatTypes = (types: TypeReponse[]) => types.map(type => ({...type.type}));
@@ -165,6 +165,9 @@ const Showcase = ({ searchParam }: ShowcaseProps) => {
                 </Link>
                 <div className="flex-1 px-4 py-2 md:max-w-sm lg:max-w-md" >
                     <SearchBar onSearch={onSearch} onChange={onChange} value={search} />
+                </div>
+                <div className="flex justify-center xs:justify-end flex-1 pr-6">
+                    <UserMenu />
                 </div>
             </div>
             <div className="flex items-center justify-center flex-1">
