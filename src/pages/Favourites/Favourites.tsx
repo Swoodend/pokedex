@@ -1,8 +1,15 @@
 import * as React from 'react';
+import { useFavouritePokemon } from '../../context/FavouritePokemonProvider';
 
 const Favourites = () => {
+    const { favouritePokemon } = useFavouritePokemon();
+
     return (
-        <h1>I am the favourites page</h1>
+        <div>
+            {favouritePokemon.map(pokemon => {
+                return <div>{pokemon.name}</div>
+            })}
+        </div>
     );
 };
 
