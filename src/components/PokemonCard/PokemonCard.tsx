@@ -20,7 +20,8 @@ const PokemonCard = (props: PokemonCardProps) => {
         moves,
         weight,
         types,
-        stats
+        stats,
+        primaryColor
     } = props;
 
     const [showMoves, setShowMoves] = React.useState(false);
@@ -34,8 +35,8 @@ const PokemonCard = (props: PokemonCardProps) => {
             toast(`${uppercase(name)} is already a favourite pokemon!`, { type: 'error' });
             return;
         }
-        
-        // this is currently just a duplicate of props, but it might now always be a 1:1 match
+
+        // this is currently just a duplicate of props, but it might not always be a 1:1 match
         // so I pulled it out to a variable
         const newFavourite = {
             name,
@@ -44,20 +45,17 @@ const PokemonCard = (props: PokemonCardProps) => {
             moves,
             weight,
             types,
-            stats
+            stats,
+            primaryColor
         };
-
+        
         // todo - it's probably convenient if we expose a function that handles this merge logic
         // instead of making the developer do it every time (SW)
         setFavouritePokemon([...favouritePokemon, newFavourite]);
         toast(`${uppercase(name)} added to favourites`, { type: 'success' });
-
     }
     
-    const primaryType = types[0].name.toLowerCase();
-
-    const backgroundColor = TYPE_COLOR_MAPPING[primaryType];
-    const fontColor = TYPE_COLOR_MAPPING[`${primaryType}-text`];
+    const fontColor = TYPE_COLOR_MAPPING[`${primaryColor}-text`];
     
     return (
         <div className="bg-white border-2 rounded-2xl shadow-lg h-132 xs:h-180 w-full xs:max-w-md sm: max-w-lg">
@@ -76,7 +74,7 @@ const PokemonCard = (props: PokemonCardProps) => {
                     </div>
                     <img src={img} alt={`The pokemon ${name}`} className="h-full object-cover select-none" />
                 </div>
-                <div className={`flex flex-col flex-1 p-4 ${backgroundColor} ${fontColor} relative overflow-y-auto overflow-x-hidden rounded-b-2xl`}>
+                <div className={`flex flex-col flex-1 p-4 ${primaryColor} ${fontColor} relative overflow-y-auto overflow-x-hidden rounded-b-2xl`}>
                     {
                         showMoves ?
                             <>
@@ -104,7 +102,7 @@ const PokemonCard = (props: PokemonCardProps) => {
                             type="button"
                             aria-pressed={showMoves}
                             onClick={() => setShowMoves(!showMoves)}
-                            className={`px-2 py-1 rounded text-sm ${backgroundColor} ${fontColor}
+                            className={`px-2 py-1 rounded text-sm ${primaryColor} ${fontColor}
                              focus:outline-none underline underline-offset-4`}
                         >
                             View {showMoves ? 'stats' : 'moves'}

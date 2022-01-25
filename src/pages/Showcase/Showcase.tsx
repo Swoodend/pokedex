@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import PokemonCard from '../../components/PokemonCard/PokemonCard';
 import { PlusCircleIcon, SwitchHorizontalIcon, ShieldExclamationIcon, HandIcon } from '@heroicons/react/outline';
 import UserMenu from '../../components/UserMenu/UserMenu';
+import { TYPE_COLOR_MAPPING } from '../../components/PokemonCard/TypeColorMapping';
 
 interface ShowcaseProps {
     searchParam?: string;
@@ -51,6 +52,7 @@ export interface Pokemon {
     name: string;
     types: Type[];
     stats: Stat[];
+    primaryColor: string;
 };
 
 const POKEMON_STATS: Record<string, boolean> = { hp: true, defense: true, speed: true, attack: true };
@@ -87,6 +89,9 @@ const formatPokemon = (pokemon: Record<string, any>): Pokemon => {
         stats
     } = pokemon;
 
+    const primaryType = types[0].name.toLowerCase();
+    const primaryColor = TYPE_COLOR_MAPPING[primaryType];
+
     return {
         img: other['official-artwork']['front_default'],
         height,
@@ -94,7 +99,8 @@ const formatPokemon = (pokemon: Record<string, any>): Pokemon => {
         name,
         types: formatTypes(types),
         moves: formatMoves(moves),
-        stats: formatStats(stats)
+        stats: formatStats(stats),
+        primaryColor
     };
 };
 
@@ -182,6 +188,7 @@ const Showcase = ({ searchParam }: ShowcaseProps) => {
                         moves={featuredPokemon.moves}
                         types={featuredPokemon.types}
                         stats={featuredPokemon.stats}
+                        primaryColor={featuredPokemon.primaryColor}
                     />
                     : null
                 }
