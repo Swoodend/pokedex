@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useFavouritePokemon } from '../../context/FavouritePokemonProvider';
 import { Link } from 'react-router-dom';
-import { uppercase } from '../../components/PokemonCard/PokemonCard';
+import { capitalize } from '../../components/PokemonCard/PokemonCard';
 import { XIcon } from '@heroicons/react/solid';
 import { Pokemon } from '../Showcase/Showcase';
 import { toast } from 'react-toastify';
@@ -32,7 +32,7 @@ const Favourites = () => {
                             </div>
                             <div className={`flex flex-col flex-1 h-full py-2 pl-4 rounded-r-xl ${primaryColor}`}>
                                 <div className="flex text-lg font-medium">
-                                    <div className="flex-shrink-0">{uppercase(name)}</div>
+                                    <div className="flex-shrink-0">{capitalize(name)}</div>
                                     <div className="flex items-center justify-end w-full mr-2">
                                         <Link 
                                             to={`/?search=${name}`}

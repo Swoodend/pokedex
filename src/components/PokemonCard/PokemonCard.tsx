@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 interface PokemonCardProps extends Pokemon { };
 
 // todo - this probably belongs in a "utils.ts" type file (SW)
-export const uppercase = (value: string) => `${value[0].toUpperCase()}${value.substring(1)}`;
+export const capitalize = (value: string) => `${value[0].toUpperCase()}${value.substring(1)}`;
 
 const PokemonCard = (props: PokemonCardProps) => {
     const {
@@ -33,7 +33,7 @@ const PokemonCard = (props: PokemonCardProps) => {
         const alreadyFavourited = favouritePokemon.filter(pokemon => pokemon.name === name).length;
 
         if (alreadyFavourited) {
-            toast(`${uppercase(name)} is already a favourite pokemon!`, { type: 'error' });
+            toast(`${capitalize(name)} is already a favourite pokemon!`, { type: 'error' });
             return;
         }
 
@@ -55,7 +55,7 @@ const PokemonCard = (props: PokemonCardProps) => {
         // todo - it's probably convenient if we expose a function that handles this merge logic
         // instead of making the developer do it every time (SW)
         setFavouritePokemon([...favouritePokemon, newFavourite]);
-        toast(`${uppercase(name)} added to favourites`, { type: 'success' });
+        toast(`${capitalize(name)} added to favourites`, { type: 'success' });
     }
     
     
@@ -90,7 +90,7 @@ const PokemonCard = (props: PokemonCardProps) => {
                             <div className="absolute top-3 right-3">
                                 <TypesDisplayRow types={types} fontColor={fontColor}/>
                             </div>
-                            <h1 className="text-7xl font-thin select-none">{`${uppercase(name)}`}</h1>
+                            <h1 className="text-7xl font-thin select-none">{`${capitalize(name)}`}</h1>
                             <div className="grid grid-cols-2 grid-rows-2 gap-2 pt-6 xs:pt-12 xs:gap-y-4">
                                 {stats.map(stat => <StatRow key={stat.name} Icon={stat.icon} name={stat.name} value={stat.value} />)}
                                 <StatRow Icon={ArrowUpIcon} name="height" value={height} />
