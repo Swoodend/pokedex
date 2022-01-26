@@ -115,21 +115,16 @@ const formatPokemon = (pokemon: Record<string, any>): Pokemon => {
 };
 
 const fetchPokemonDescription = async (endpoint: string) => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-
     try {
-        const response = await fetch(endpoint, { signal });
+        const response = await fetch(endpoint);
         const speciesObject = await response.json();
         const description = speciesObject?.flavor_text_entries?.[0]?.flavor_text || 'No description found';
 
         // remove carraige returns/form feeds return by the API
         return description.replace(/\r?\n|\r|\f/g, ' ');
     } catch (error: any) {
-        if (error.name !== 'AbortError') {
-            // caught by the caller, fetchPokemon
-            throw new Error('Could not fetch pokemon description');
-        }
+        // caught by the caller, fetchPokemon
+        throw new Error('Could not fetch pokemon description');
     }
 }
 
