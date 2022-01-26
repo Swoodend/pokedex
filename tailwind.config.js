@@ -18,6 +18,9 @@ module.exports = {
         '128': '32rem',
         '132': '33rem',
         '180': '45rem'
+      },
+      minHeight: {
+        ...defaultTheme.spacing
       }
     },
   },

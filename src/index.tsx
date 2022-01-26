@@ -19,6 +19,7 @@ ReactDOM.render(
           closeOnClick={true}
           draggable={false}
           position="bottom-right"
+          theme="dark"
         />
       </main>
     </BrowserRouter>

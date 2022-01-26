@@ -7,7 +7,7 @@ import '@szhsin/react-menu/dist/transitions/slide.css';
 const UserMenu = () => {
     return (
         <Menu
-            menuButton={<MenuButton><UserCircleIcon className="h-8 w-8" /></MenuButton>}
+            menuButton={<MenuButton><UserCircleIcon className="h-8 w-8 text-gray-500" /></MenuButton>}
             direction="left"
             align="center"
             offsetX={-30}

@@ -3,14 +3,13 @@ import { Pokemon } from '../../pages/Showcase/Showcase';
 import { HeartIcon, ScaleIcon, ArrowUpIcon } from '@heroicons/react/solid';
 import TypesDisplayRow from './TypesDisplayRow'
 import StatRow from './StatRow'
-import { TYPE_COLOR_MAPPING } from './TypeColorMapping';
 import { useFavouritePokemon } from '../../context/FavouritePokemonProvider';
 import { toast } from 'react-toastify';
 
 interface PokemonCardProps extends Pokemon { };
 
 // todo - this probably belongs in a "utils.ts" type file (SW)
-const uppercase = (value: string) => `${value[0].toUpperCase()}${value.substring(1)}`;
+export const uppercase = (value: string) => `${value[0].toUpperCase()}${value.substring(1)}`;
 
 const PokemonCard = (props: PokemonCardProps) => {
     const {
@@ -21,7 +20,9 @@ const PokemonCard = (props: PokemonCardProps) => {
         weight,
         types,
         stats,
-        primaryColor
+        primaryColor,
+        fontColor,
+        description
     } = props;
 
     const [showMoves, setShowMoves] = React.useState(false);
@@ -46,7 +47,9 @@ const PokemonCard = (props: PokemonCardProps) => {
             weight,
             types,
             stats,
-            primaryColor
+            primaryColor,
+            fontColor,
+            description
         };
         
         // todo - it's probably convenient if we expose a function that handles this merge logic
@@ -55,7 +58,6 @@ const PokemonCard = (props: PokemonCardProps) => {
         toast(`${uppercase(name)} added to favourites`, { type: 'success' });
     }
     
-    const fontColor = TYPE_COLOR_MAPPING[`${primaryColor}-text`];
     
     return (
         <div className="bg-white border-2 rounded-2xl shadow-lg h-132 xs:h-180 w-full xs:max-w-md sm: max-w-lg">
