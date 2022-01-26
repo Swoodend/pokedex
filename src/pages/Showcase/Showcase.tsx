@@ -1,11 +1,13 @@
 import * as React from 'react';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import useSearchNavigation from '../../hooks/useSearchNavigation';
+import Spinner from '../../components/Spinner/Spinner';
 import { Link } from 'react-router-dom';
 import PokemonCard from '../../components/PokemonCard/PokemonCard';
 import { PlusCircleIcon, SwitchHorizontalIcon, ShieldExclamationIcon, HandIcon } from '@heroicons/react/outline';
 import UserMenu from '../../components/UserMenu/UserMenu';
 import { TYPE_COLOR_MAPPING } from '../../components/PokemonCard/TypeColorMapping';
+import NotFound from './NotFound';
 
 interface ShowcaseProps {
     searchParam?: string;
@@ -162,7 +164,7 @@ const Showcase = ({ searchParam }: ShowcaseProps) => {
                 if (response.status === 200) {
                     const pokemon = await response.json();
                     const description = await fetchPokemonDescription(pokemon.species.url);
-                    setFeaturedPokemon(formatPokemon({...pokemon, description}) as Pokemon)
+                    setFeaturedPokemon(formatPokemon({ ...pokemon, description }) as Pokemon)
                 }
 
                 if (response.status === 404) {
@@ -212,7 +214,10 @@ const Showcase = ({ searchParam }: ShowcaseProps) => {
                 </div>
             </div>
             <div className="flex items-center justify-center flex-1">
-                {loading ? <p>spinner</p> : null}
+                {loading ?
+                    <Spinner />
+                    : null
+                }
 
                 {featuredPokemon ?
                     <PokemonCard
@@ -231,7 +236,7 @@ const Showcase = ({ searchParam }: ShowcaseProps) => {
                 }
 
                 {/* null represents a special case where we could not find the pokemon that the user searched for*/}
-                {featuredPokemon === null ? <p>show "not found" card</p> : null}
+                {featuredPokemon === null ? <NotFound search={search} /> : null}
             </div>
         </div>
     );
