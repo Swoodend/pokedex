@@ -236,7 +236,7 @@ const Showcase = ({ searchParam }: ShowcaseProps) => {
                 }
 
                 {/* null represents a special case where we could not find the pokemon that the user searched for*/}
-                {featuredPokemon === null ? <NotFound search={search} /> : null}
+                {featuredPokemon === null ? <NotFound search={searchParam} /> : null}
             </div>
         </div>
     );

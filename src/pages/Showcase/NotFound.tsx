@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 interface NotFoundProps {
-    search: string;
+    search: string | undefined;
 }
 
 const NotFound = ({ search }: NotFoundProps) => {
